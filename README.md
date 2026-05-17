@@ -275,6 +275,7 @@ section:AddColorPicker({
     Default = Color3,      -- Initial color
     Callback = function(color) end  -- Called when color changes
 })
+```
 Compatible UI Libraries
 ✅ RbxCheats UI Library
 

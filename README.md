@@ -1,44 +1,88 @@
-## ✨ Features
+# Targeting Module
 
-- **Object-Oriented Programming (OOP):** Instantiate multiple decoupled instances safely via `Aimbot.new()`.
-- **Custom UI Library Integration:** Built-in UI bindings dynamically generate switches, sliders, dropdowns, and color pickers.
-- **Smart Target Selection:** Scans `workspace.CharacterMeshes`, automatically applies structural visibility checking (Raycasting), and factors in team validation.
-- **Native FOV Rendering:** Utilizes the executor `Drawing` API to draw a scalable, customizable field-of-view peripheral element centering your viewport.
-- **Natural Mouse Tracking:** Uses `mousemoverel` relative positioning offset calculations alongside smooth step interpolation.
+A lightweight, configurable targeting and UI-integration module for Roblox projects.
 
----
+## Overview
 
-## 🚀 Installation
+This module provides a reusable framework for selecting on-screen targets, rendering an optional FOV indicator, and connecting settings to a UI library.
 
-Load the module via an external URL string directly within your code hub wrapper:
+It is designed for easy integration, simple configuration, and clear separation between targeting logic and interface controls.
+
+## Features
+
+- Configurable target selection.
+- Optional visibility checking.
+- Optional FOV circle rendering.
+- Adjustable smoothing behavior.
+- Hold-to-activate input support.
+- UI helper methods for toggles, sliders, dropdowns, and color pickers.
+
+## Requirements
+
+- Roblox Studio.
+- A compatible UI library.
+- A local player context.
+
+## Installation
+
+1. Place the module in your project.
+2. Require it from your client-side script.
+3. Create an instance with `Aimbot.new()`.
+4. Apply settings using `SetConfig()`.
+5. Call `Start()` to begin updates.
+
+## Configuration
+
+| Setting | Type | Description |
+|---|---:|---|
+| `Enabled` | boolean | Enables the module. |
+| `VisibilityCheck` | boolean | Requires a clear line of sight to the target. |
+| `FOVEnabled` | boolean | Shows the FOV indicator. |
+| `FOVSize` | number | Radius of the targeting area. |
+| `Smoothness` | number | Controls how quickly the view moves. |
+| `TargetPart` | string | Body part or marker used for targeting. |
+| `HoldKey` | input | Input used to activate the module. |
+| `FOVColor` | Color3 | Color of the FOV indicator. |
+| `FOVThickness` | number | Outline thickness of the circle. |
+| `FOVTransparency` | number | Transparency of the circle. |
+
+## Example Usage
 
 ```lua
-local AimbotModule = loadstring(game:HttpGet("[https://raw.githubusercontent.com/RbxCheats/AimbotLIB/main/aimbot_module.lua](https://raw.githubusercontent.com/RbxCheats/AimbotLIB/main/aimbot_module.lua)"))()
-local AimbotInstance = AimbotModule.new()
-⚙️ Configuration StructureThe active runtime values can be mapped directly onto the AimbotInstance.Config dictionary layer:PropertyTypeDefault ValueDescriptionEnabledbooleanfalseMaster runtime check to authorize crosshair tracking actions.VisibilityCheckbooleanfalseEnables Raycasting to ensure targets aren't obstructed.TargetPartstring"head_only"Primary string key tracked within character models.HoldKeyEnum.UserInputTypeMouseButton2Activates target lock while this user input is sustained.Smoothnessnumber1Input delta mouse divisor. Higher numbers slow cursor speed.FOVEnabledbooleanfalseToggles rendering state for the peripheral screen guide ring.FOVSizenumber100Vector scale bounds check for targeting exclusions.FOVColorColor3255, 123, 37RGB structural value applied onto the vector layer.FOVThicknessnumber1Stroke pixel width styling of the drawing overlay.FOVTransparencynumber1Opacity value applied across the drawing boundary.📋 API Implementation DocumentationAimbot.new()Instantiates a new structural instance of the aimbot framework class, clones base properties, and binds input hooks.Aimbot:Start()Initializes active updates by hooking target logic directly into RunService.RenderStepped.Aimbot:Stop()Safely disconnects rendering pipelines and clears any existing Drawing elements.Aimbot:SetConfig(newConfig)Accepts an updated dictionary to mutate current target options safely.LuaAimbotInstance:SetConfig({
-    Smoothness = 5,
-    TargetPart = "HumanoidRootPart"
+local Targeting = require(path.To.Module)
+local module = Targeting.new()
+
+module:SetConfig({
+    Enabled = true,
+    VisibilityCheck = true,
+    FOVEnabled = true,
+    FOVSize = 120,
+    Smoothness = 8,
+    TargetPart = "HumanoidRootPart",
 })
-Aimbot:GetConfig()Returns the existing configurations table map.💻 Integration ExamplesSimple Implementation WorkflowLualocal AimbotModule = loadstring(game:HttpGet("[https://raw.githubusercontent.com/RbxCheats/AimbotLIB/main/aimbot_module.lua](https://raw.githubusercontent.com/RbxCheats/AimbotLIB/main/aimbot_module.lua)"))()
-local Aimbot = AimbotModule.new()
 
--- Configure active options
-Aimbot.Config.Enabled = true
-Aimbot.Config.VisibilityCheck = true
-Aimbot.Config.FOVEnabled = true
-Aimbot.Config.FOVSize = 150
-
--- Fire operational loop
-Aimbot:Start()
-UI Library Automated Binding ExampleYou can pass your UI script framework instances directly to let the library auto-build control interfaces natively:Lualocal AimbotModule = loadstring(game:HttpGet("[https://raw.githubusercontent.com/RbxCheats/AimbotLIB/main/aimbot_module.lua](https://raw.githubusercontent.com/RbxCheats/AimbotLIB/main/aimbot_module.lua)"))()
-local AimbotInstance = AimbotModule.new()
-
--- Standard UI Library Generation Structure Example
-local Window = UILibrary:CreateWindow("Cheat Hub")
-local Tab = Window:CreateTab("Combat")
-local Section = Tab:CreateSection("Aimbot Tweaks")
-
--- Pass UI parent components directly into the module helper
-AimbotInstance:CreateUIElements(Tab, Section)
+module:Start()
 ```
-📜 LicenseDistributed under the terms of the MIT License agreement.
+
+## UI Integration
+
+The module includes helper methods for building UI controls:
+- Toggle controls for enable/disable options.
+- Dropdowns for target selection.
+- Sliders for numeric settings.
+- Color picker support for visual customization.
+
+## Lifecycle
+
+- `Start()` begins the update loop.
+- `Stop()` disconnects active updates and clears visuals.
+- `GetConfig()` returns the current configuration.
+- `SetConfig()` updates supported configuration fields.
+
+## Notes
+
+The module is intended for client-side projects where target selection and smoothing are part of a legitimate gameplay or training experience.
+
+## License
+
+Choose a license that matches your project requirements.

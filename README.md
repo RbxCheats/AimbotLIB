@@ -82,7 +82,3 @@ The module includes helper methods for building UI controls:
 ## Notes
 
 The module is intended for client-side projects where target selection and smoothing are part of a legitimate gameplay or training experience.
-
-## License
-
-Choose a license that matches your project requirements.
